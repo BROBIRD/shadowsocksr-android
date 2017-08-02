@@ -76,11 +76,11 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="in.zhaoj.shadowsocksr.blue_acl.intent.action.SORT"/>
+                <action android:name="in.zhaoj.shadowsocksr.acl.intent.action.SORT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="in.zhaoj.shadowsocksr.blue_acl.intent.action.SCAN"/>
+                <action android:name="in.zhaoj.shadowsocksr.acl.intent.action.SCAN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
@@ -134,7 +134,7 @@
                   android:taskAffinity=""
                   android:theme="@style/PopupTheme.QuickSwitch">
             <intent-filter>
-                <action android:name="in.zhaoj.shadowsocksr.blue_acl.QUICK_SWITCH" />
+                <action android:name="in.zhaoj.shadowsocksr.acl.QUICK_SWITCH" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
