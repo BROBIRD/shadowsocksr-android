@@ -578,7 +578,7 @@ final class ProfileManagerActivity extends AppCompatActivity with OnMenuItemClic
                 }
               ): DialogInterface.OnClickListener)
               .setNeutralButton(R.string.scan_qrcode_direct_download_text, ((_, _) => {
-                  val marketUri = Uri.parse("https://breakwa11.github.io/download/BarcodeScanner.apk")
+                  val marketUri = Uri.parse("https://github.com/BROBIRD/breakwa11.github.io/raw/master/download/BarcodeScanner.apk")
                   val marketIntent = new Intent(Intent.ACTION_VIEW, marketUri)
                   startActivity(marketIntent)
                 }
