@@ -5,13 +5,6 @@ jdk:
 
 sudo: false
 
-branches:
-  only:
-    - nokcp
-    - nokcp-blue
-    - nokcp-acl
-    - nokcp-blue-acl
-
 addons:
     apt:
         packages:
