@@ -4,7 +4,7 @@ dexMaxHeap := "4g"
 enablePlugins(AndroidApp)
 android.useSupportVectors
 
-name := "shadowsocksr"
+name := "shadowsocksr-acl"
 
 applicationId := "in.zhaoj.shadowsocksr.acl"
 
