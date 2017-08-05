@@ -52,3 +52,12 @@ install:
 
 script:
     - sbt native-build android:package-release
+    
+deploy:
+    provider: releases
+    file: "/home/travis/build/BROBIRD/shadowsocksr-android/target/android/output/shadowsocksr-release.apk"
+    skip_cleanup: true
+    api_key:
+      secure: 3WzoEwDGyHsc1Yhq4ZIRluQY/rNSBY2vajYzLvaLVVOdqDSDLC4aBXYOiACyPzDDbb37u+y6TMFsnGwYwjcu9jk0AZxwnjm9kB/dtwWnGIzYTn/hxM3XY0BhNTYP9LGsJWcrHLt/71inACOctddgWHDkKyIcuLzXAtQPQwNNlxtE3nIgBddAck4Q0J7LuTj/gN5C+YwbkpJS/n1bJxqL28RLyCaZArLXXJBcO4OivpaBS/B8qjC5O5MzTB2K5zACwBMN4J0wJOyYj7NUwWuTo17bq9W5Clvos7NWE6JYUROFTngktQfB35M2itLHX3GhLSBwvqL+Bbnjd4/xt1Sb3A2IWqT5n2NDbWIN0rAyp7AS9fzEApGKR3d5fn2sz1dcLba9iV9ithYZX2+su+aCE5hFgQgkfATz7xWrl6zSl53415o3NA66MRtKUfatc9QIoJAG/pffUFB29ZuqjSHHhO9qhsuf4tt6WhBl9iBHjnLN3txJBcIkQyEh8tTyw+RZiPQbZl4kBLtruvJ3UNmnhofOVU00ha2n4Cx/o7+xKcvFZC4GZJPvqKJa1eKvhS+ykw80qpYe9DhAENkGouhkgfBup02X3LT/d1KiivUoyLakO9MwLk9aa5IOoLgtrsTVjGHOKVg3PNuGKX14ZaBeL5f++qxshEU9m0AftyjZOiU=
+    on:
+      tags: true
