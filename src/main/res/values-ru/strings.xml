@@ -73,6 +73,11 @@
   <string name="aclupdate_downloading">Обновление файла ...</string>
   <string name="aclupdate_successfully">Обновление успешно!</string>
   <string name="aclupdate_failed">Не удалось обновить!</string>
+  <string name="acl4ssrupdate">ACL4SSR Обновить</string>
+  <string name="acl4ssrupdate_summary">Обновите ACL4SSR Обновить</string>
+  <string name="acl4ssrupdate_downloading">Обновление файла ...</string>
+  <string name="acl4ssrupdate_successfully">Обновление успешно!</string>
+  <string name="acl4ssrupdate_failed">Не удалось обновить!</string>
   <string name="proxied_apps">Прокси для выбранных приложений</string>
   <string name="proxied_apps_summary">Установить прокси для выбранных приложений, требует режим NAT под Android 4.x</string>
   <string name="on">Вкл</string>
@@ -207,3 +212,4 @@
   <string name="sent">Отправлено:</string>
   <string name="received">Получено:</string>
 </resources>
+

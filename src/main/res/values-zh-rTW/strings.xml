@@ -153,6 +153,12 @@
   <string name="aclupdate_downloading">檔案升級中...</string>
   <string name="aclupdate_successfully">檔案升級成功！</string>
   <string name="aclupdate_failed">檔案升級失敗！</string>
+  <string name="acl4ssrupdate">ACL4SSR 檔案升級</string>
+  <string name="acl4ssrupdate_summary">升級您的 ACL4SSR 檔案</string>
+
+  <string name="acl4ssrupdate_downloading">檔案升級中...</string>
+  <string name="acl4ssrupdate_successfully">檔案升級成功！</string>
+  <string name="acl4ssrupdate_failed">檔案升級失敗！</string>
 
   <string name="action_apply_all">套用設定至所有設定檔</string>
   <string name="action_export">匯出至剪貼簿</string>
@@ -211,3 +217,4 @@
   <string name="received">接收:</string>
 
 </resources>
+

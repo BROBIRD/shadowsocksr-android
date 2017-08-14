@@ -151,6 +151,12 @@
   <string name="aclupdate_downloading">文件更新中...</string>
   <string name="aclupdate_successfully">文件更新成功!</string>
   <string name="aclupdate_failed">文件更新失败！</string>
+  <string name="acl4ssrupdate">ACL4SSR 文件更新</string>
+  <string name="acl4ssrupdate_summary">更新您本地的 ACL4SSR 文件</string>
+
+  <string name="acl4ssrupdate_downloading">文件更新中...</string>
+  <string name="acl4ssrupdate_successfully">文件更新成功!</string>
+  <string name="acl4ssrupdate_failed">文件更新失败！</string>
 
   <string name="action_apply_all">应用设置到所有配置文件</string>
   <string name="action_export">导出至剪贴板</string>
@@ -210,3 +216,4 @@
   <string name="received">接收:</string>
 
 </resources>
+

@@ -263,6 +263,12 @@ class ShadowsocksSettings extends PreferenceFragment with OnSharedPreferenceChan
       true
     })
 
+    findPreference("acl4ssrupdate").setOnPreferenceClickListener((preference: Preference) => {
+      app.track(TAG, "acl4ssrupdate")
+        updateAcl4SSR()
+      true
+    })
+
     if(new File(app.getApplicationInfo.dataDir + '/' + "self.acl").exists == false && getPreferenceManager.getSharedPreferences.getString(Key.aclurl, "") != "")
     {
       downloadAcl(getPreferenceManager.getSharedPreferences.getString(Key.aclurl, ""))
@@ -441,6 +447,48 @@ class ShadowsocksSettings extends PreferenceFragment with OnSharedPreferenceChan
     }.start()
   }
 
+  def updateAcl4SSR(){
+    val progressDialog = ProgressDialog.show(activity, getString(R.string.acl4ssrupdate), getString(R.string.acl4ssrupdate_downloading), false, false)
+    new Thread {
+      override def run() {
+        Looper.prepare();
+        for (routename <- Array("gfwlist-banAD" , "banAD" , "fullgfwlist" , "nobanAD" , "backcn-banAD" , "onlybanAD")){
+        try {
+          IOUtils.writeString(app.getApplicationInfo.dataDir + '/' + routename + ".acl", autoClose(
+            new URL("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/" + routename + ".acl").openConnection().getInputStream())(IOUtils.readString))
+          progressDialog.dismiss()
+        } catch {
+          case e: IOException =>
+            e.printStackTrace()
+            progressDialog.dismiss()
+            new AlertDialog.Builder(activity, R.style.Theme_Material_Dialog_Alert)
+              .setTitle(getString(R.string.acl4ssrupdate))
+              .setNegativeButton(android.R.string.yes, null)
+              .setMessage(getString(R.string.acl4ssrupdate_failed))
+              .create()
+              .show()
+          case e: Exception =>  // unknown failures, probably shouldn't retry
+            e.printStackTrace()
+            progressDialog.dismiss()
+            new AlertDialog.Builder(activity, R.style.Theme_Material_Dialog_Alert)
+              .setTitle(getString(R.string.acl4ssrupdate))
+              .setNegativeButton(android.R.string.yes, null)
+              .setMessage(getString(R.string.acl4ssrupdate_failed))
+              .create()
+              .show()
+        }
+      }
+      new AlertDialog.Builder(activity, R.style.Theme_Material_Dialog_Alert)
+            .setTitle(getString(R.string.acl4ssrupdate))
+            .setNegativeButton(android.R.string.yes, null)
+            .setMessage(getString(R.string.acl4ssrupdate_successfully))
+            .create()
+            .show()
+        Looper.loop();
+      }
+    }.start()
+  }
+
   def refreshProfile() {
     profile = app.currentProfile match {
       case Some(p) => p
@@ -489,3 +537,4 @@ class ShadowsocksSettings extends PreferenceFragment with OnSharedPreferenceChan
     for (name <- Array(PROXY_PREFS, FEATURE_PREFS).flatten) updatePreference(findPreference(name), name, profile)
   }
 }
+

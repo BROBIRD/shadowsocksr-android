@@ -82,6 +82,11 @@
   <string name="aclupdate_downloading">Updating ACL file...</string>
   <string name="aclupdate_successfully">Successfully updated ACL file.</string>
   <string name="aclupdate_failed">Failed to update ACL file!</string>
+  <string name="acl4ssrupdate">ACL4SSR Update</string>
+  <string name="acl4ssrupdate_summary">Update Your ACL4SSR file</string>
+  <string name="acl4ssrupdate_downloading">Updating ACL4SSR file...</string>
+  <string name="acl4ssrupdate_successfully">Successfully updated ACL4SSR file.</string>
+  <string name="acl4ssrupdate_failed">Failed to update ACL4SSR file!</string>
   <string name="proxied_apps">Per-App Proxy</string>
   <string name="proxied_apps_summary">Set proxy for selected apps, requires NAT mode under Android 4.x</string>
   <string name="on">On</string>
@@ -216,3 +221,4 @@
   <string name="sent">Sent:</string>
   <string name="received">Received:</string>
 </resources>
+

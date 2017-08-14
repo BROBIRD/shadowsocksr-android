@@ -148,6 +148,12 @@
   <string name="aclupdate_downloading">ファイルの更新中...</string>
   <string name="aclupdate_successfully">アップデートは成功しました！</string>
   <string name="aclupdate_failed">アップデートに失敗しました！</string>
+  <string name="acl4ssrupdate">ACL4SSR 更新</string>
+  <string name="acl4ssrupdate_summary">ACL4SSR ファイル 更新</string>
+  <string name="acl4ssrupdate_downloading">ファイルの更新中...</string>
+  <string name="acl4ssrupdate_successfully">アップデートは成功しました！</string>
+  <string name="acl4ssrupdate_failed">アップデートに失敗しました！</string>
+
 
   <string name="action_apply_all">設定をすべてのプロファイルに適応する</string>
   <string name="action_export">クリップボードに出力</string>
@@ -211,3 +217,4 @@
   <string name="kcpcli">KCP パラメータ</string>
 
 </resources>
+
