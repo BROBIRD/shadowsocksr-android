@@ -55,7 +55,7 @@
         <item>verify_sha1</item>
         <item>auth_sha1</item>
         <item>auth_sha1_v2</item>
-	      <item>auth_sha1_v4</item>
+          <item>auth_sha1_v4</item>
         <item>auth_aes128_sha1</item>
         <item>auth_aes128_md5</item>
         <item>auth_chain_a</item>
@@ -68,7 +68,7 @@
         <item>verify_sha1</item>
         <item>auth_sha1</item>
         <item>auth_sha1_v2</item>
-	      <item>auth_sha1_v4</item>
+          <item>auth_sha1_v4</item>
         <item>auth_aes128_sha1</item>
         <item>auth_aes128_md5</item>
         <item>auth_chain_a</item>
@@ -102,10 +102,10 @@
         <item>self</item>
         <item>gfwlist-banAD</item>
         <item>banAD</item>
-        <item>fullgfwlist</item>
-        <item>nobanAD</item>
         <item>backcn-banAD</item>
         <item>onlybanAD</item>
+        <item>fullgfwlist</item>
+        <item>nobanAD</item>
     </string-array>
 
     <string-array name="bypass_private_route">
