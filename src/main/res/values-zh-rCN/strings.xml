@@ -135,12 +135,12 @@
     <item>仅代理中国大陆无法访问的地址</item>
     <item>仅代理中国大陆地址</item>
     <item>自定义 ACL 文件</item>
-    <item>ACLSSR去广告黑名单</item>
-    <item>ACLSSR去广告白名单</item>
-    <item>ACLSSR去广告回国模式</item>
-    <item>ACLSSR仅去广告</item>
-    <item>ACLSSR仅黑名单</item>
-    <item>ACLSSR仅白名单</item>
+    <item>ACL4SSR去广告黑名单</item>
+    <item>ACL4SSR去广告白名单</item>
+    <item>ACL4SSR去广告回国模式</item>
+    <item>ACL4SSR仅去广告</item>
+    <item>ACL4SSR仅黑名单</item>
+    <item>ACL4SSR仅白名单</item>
   </string-array>
 
   <string name="acl_file">ACL 文件 URL</string>

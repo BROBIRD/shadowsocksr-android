@@ -137,12 +137,12 @@
     <item>GFW List</item>
     <item>China List</item>
     <item>自訂 ACL 檔案</item>
-    <item>ACLSSR去廣告黑名單</item>
-    <item>ACLSSR去廣告白名單</item>
-    <item>ACLSSR去廣告回中國大陸模式</item>
-    <item>ACLSSR僅去廣告</item>
-    <item>ACLSSR僅黑名單</item>
-    <item>ACLSSR僅白名單</item>
+    <item>ACL4SSR去廣告黑名單</item>
+    <item>ACL4SSR去廣告白名單</item>
+    <item>ACL4SSR去廣告回中國大陸模式</item>
+    <item>ACL4SSR僅去廣告</item>
+    <item>ACL4SSR僅黑名單</item>
+    <item>ACL4SSR僅白名單</item>
   </string-array>
 
   <string name="acl_file">ACL 檔案網址</string>
