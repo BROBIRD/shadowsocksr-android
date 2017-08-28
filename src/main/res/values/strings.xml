@@ -68,12 +68,12 @@
     <item>GFW List</item>
     <item>China List</item>
     <item>Customize ACL File</item>
-    <item>ACLSSR Ban Ad+GFW List</item>
-    <item>ACLSSR Ban Ad+Bypass LAN &amp; China</item>
-    <item>ACLSSR Ban Ad+China List</item>
-    <item>ACLSSR Only Ban Ad</item>
-    <item>ACLSSR Only GFW List</item>
-    <item>ACLSSR Only Bypass LAN &amp; China</item>
+    <item>ACL4SSR Ban Ad+GFW List</item>
+    <item>ACL4SSR Ban Ad+Bypass LAN &amp; China</item>
+    <item>ACL4SSR Ban Ad+China List</item>
+    <item>ACL4SSR Only Ban Ad</item>
+    <item>ACL4SSR Only GFW List</item>
+    <item>ACL4SSR Only Bypass LAN &amp; China</item>
   </string-array>
   <string name="acl_file">ACL File URL</string>
   <string name="aclupdate">ACL Update</string>
