@@ -214,11 +214,11 @@ object State {
 }
 
 object Action {
-  val SERVICE = "in.zhaoj.shadowsocksr.SERVICE"
-  val CLOSE = "in.zhaoj.shadowsocksr.CLOSE"
-  val QUICK_SWITCH = "in.zhaoj.shadowsocksr.QUICK_SWITCH"
-  val SCAN = "in.zhaoj.shadowsocksr.intent.action.SCAN"
-  val SORT = "in.zhaoj.shadowsocksr.intent.action.SORT"
+  val SERVICE = "in.zhaoj.shadowsocksr.blue.SERVICE"
+  val CLOSE = "in.zhaoj.shadowsocksr.blue.CLOSE"
+  val QUICK_SWITCH = "in.zhaoj.shadowsocksr.blue.QUICK_SWITCH"
+  val SCAN = "in.zhaoj.shadowsocksr.blue.intent.action.SCAN"
+  val SORT = "in.zhaoj.shadowsocksr.blue.intent.action.SORT"
 }
 
 object Route {
