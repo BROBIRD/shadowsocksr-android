@@ -454,9 +454,17 @@ class ShadowsocksSettings extends PreferenceFragment with OnSharedPreferenceChan
         Looper.prepare();
         for (routename <- Array("gfwlist-banAD" , "banAD" , "fullgfwlist" , "nobanAD" , "backcn-banAD" , "onlybanAD")){
         try {
-          IOUtils.writeString(app.getApplicationInfo.dataDir + '/' + routename + ".acl", autoClose(
+          try{
+            IOUtils.writeString(app.getApplicationInfo.dataDir + '/' + routename + ".acl", autoClose(
+            new URL("https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/" + routename + ".acl").openConnection().getInputStream())(IOUtils.readString))
+            progressDialog.dismiss()
+          }
+          catch{
+            case e: Exception => {}
+            IOUtils.writeString(app.getApplicationInfo.dataDir + '/' + routename + ".acl", autoClose(
             new URL("https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/" + routename + ".acl").openConnection().getInputStream())(IOUtils.readString))
-          progressDialog.dismiss()
+            progressDialog.dismiss()
+          }
         } catch {
           case e: IOException =>
             e.printStackTrace()

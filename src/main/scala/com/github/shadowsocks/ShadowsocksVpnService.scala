@@ -430,7 +430,6 @@ class ShadowsocksVpnService extends VpnService with BaseService {
 
     if (profile.ipv6) {
       builder.addAddress(PRIVATE_VLAN6.formatLocal(Locale.ENGLISH, "1"), 126)
-      builder.addRoute("::", 0)
     }
 
     if (Utils.isLollipopOrAbove) {
@@ -453,12 +452,16 @@ class ShadowsocksVpnService extends VpnService with BaseService {
 
     if (profile.route == Route.ALL || profile.route == Route.BYPASS_CHN) {
       builder.addRoute("0.0.0.0", 0)
+      if (profile.ipv6) builder.addRoute("::", 0)
     } else {
       val privateList = getResources.getStringArray(R.array.bypass_private_route)
       privateList.foreach(cidr => {
         val addr = cidr.split('/')
         builder.addRoute(addr(0), addr(1).toInt)
       })
+      builder.addRoute(PRIVATE_VLAN, 32)
+      // https://issuetracker.google.com/issues/149636790
+      if (profile.ipv6) builder.addRoute("2000::", 3)
     }
 
     if (profile.route == Route.CHINALIST)
