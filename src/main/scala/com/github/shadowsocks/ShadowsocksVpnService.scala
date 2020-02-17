@@ -459,7 +459,7 @@ class ShadowsocksVpnService extends VpnService with BaseService {
         val addr = cidr.split('/')
         builder.addRoute(addr(0), addr(1).toInt)
       })
-      builder.addRoute(PRIVATE_VLAN, 32)
+      builder.addRoute(PRIVATE_VLAN.formatLocal(Locale.ENGLISH, "2"), 32)
       // https://issuetracker.google.com/issues/149636790
       if (profile.ipv6) builder.addRoute("2000::", 3)
     }
