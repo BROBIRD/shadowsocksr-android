@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.sdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+        ndkVersion rootProject.ndkVersion
+
+        externalNativeBuild {
+            ndkBuild {
+                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+                arguments "-j${Runtime.runtime.availableProcessors()}"
+            }
+        }
+        javaCompileOptions.annotationProcessorOptions.arguments = [
+                "room.incremental": "true",
+                "room.schemaLocation": "$projectDir/schemas".toString(),
+        ]
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
+    kotlinOptions.jvmTarget = javaVersion
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+def coroutinesVersion = '1.3.3'
+def lifecycleVersion = '2.2.0'
+def roomVersion = '2.2.3'
+def workVersion = '2.3.0'
+dependencies {
+    api project(':plugin')
+    api 'androidx.fragment:fragment-ktx:1.2.0'
+    api "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+    api "androidx.lifecycle:lifecycle-livedata-core-ktx:$lifecycleVersion"
+    api 'androidx.preference:preference:1.1.0'
+    api "androidx.room:room-runtime:$roomVersion"
+    api "androidx.work:work-runtime-ktx:$workVersion"
+    api 'com.google.code.gson:gson:2.8.6'
+    api 'dnsjava:dnsjava:2.1.9'
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    api 'org.connectbot.jsocks:jsocks:1.0.0'
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:$desugarLibsVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+}
+
+task deleteCxx(type: Delete) {
+    delete file('.cxx')
+}
+
+clean.finalizedBy deleteCxx

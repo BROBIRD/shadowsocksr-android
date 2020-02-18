@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.sdkVersion
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
+    }
+
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
+    kotlinOptions.jvmTarget = javaVersion
+}
+
+androidExtensions {
+    experimental = true
+}
+
+dependencies {
+    api 'androidx.core:core-ktx:1.2.0-rc01'
+    api 'androidx.drawerlayout:drawerlayout:1.1.0-alpha03'
+    api 'com.google.android.material:material:1.2.0-alpha03'
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+}

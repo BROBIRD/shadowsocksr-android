@@ -1,82 +1,56 @@
-## Shadowsocks for Android
+## ShadowsocksR Android 客户端
 
-A [shadowsocks](http://shadowsocks.org) client for Android, written in Scala.
+由 Shadowsocks Android 客户端修改而来，支持 SSR 协议。
 
-<a href="https://play.google.com/store/apps/details?id=com.github.shadowsocks"><img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="48"></a>
+[常见问题](FAQ.md)
 
-### CI STATUS
+### 编译
 
-[![Build Status](https://api.travis-ci.org/shadowsocks/shadowsocks-android.svg)](https://travis-ci.org/shadowsocks/shadowsocks-android)
+* [Git](https://git-scm.com/downloads)
+* [OpenJDK 8+](https://jdk.java.net/)
+* [Android SDK](https://developer.android.com/studio#command-tools)
+  - Android SDK Build-Tools 29.0.2
+  - Android SDK Platform 29
+  - NDK (Side by side) 21.0.6113669
+  - Android SDK Tools
 
-### PREREQUISITES
-
-* JDK 1.8
-* SBT 0.13.0+
-* Android SDK r25+
-* Android NDK r12b+
-
-### BUILD
-
-* Set environment variable `ANDROID_HOME` to `/path/to/android-sdk`
-* Set environment variable `ANDROID_NDK_HOME` to `/path/to/android-ndk`
-* Create your key following the instructions at https://developer.android.com/studio/publish/app-signing.html
-* Put your key in ~/.keystore
-* Create `local.properties` from `local.properties.example` with your own key information
-* Invoke the building like this
-
-```bash
-    git submodule update --init
-    
-    # Build the App
-    sbt native-build clean android:package-release
+```shell script
+git clone --recurse-submodules https://github.com/shadowsocksRb/shadowsocksRb-android.git
+cd shadowsocksRb-android
+# 建议编辑 mobile/build.gradle ,修改 applicationId 以规避检测
+./gradlew aR
+adb install mobile/build/outputs/apk/release/mobile-release.apk
 ```
 
-#### BUILD on Mac OS X (with HomeBrew)
+### 贡献
 
-* Install Android SDK and NDK by run `brew install android-ndk android-sdk`
-* Add `export ANDROID_HOME=/usr/local/Cellar/android-sdk/$version` to your .bashrc , then reopen the shell to load it.
-* Add `export ANDROID_NDK_HOME=/usr/local/Cellar/android-ndk/$version` to your .bashrc , then reopen the shell to load it.
-* echo "y" | android update sdk --filter tools,platform-tools,build-tools-23.0.2,android-23,extra-google-m2repository --no-ui -a
-* echo "y" | android update sdk --filter extra-android-m2repository --no-ui --no-https -a
-* Create your key following the instructions at http://developer.android.com/guide/publishing/app-signing.html#cert
-* Put your key in ~/.keystore
-* Create `local.properties` from `local.properties.example` with your own key information .
-* Invoke the building like this
+欢迎问题修复，功能添加及翻译。其中问题修复和功能添加请优先考虑为上游贡献，翻译请以简体中文为底本。
 
-```bash
-    git submodule update --init
+### 许可
 
-    # Build native binaries
-    ./build.sh
+GPLv3
 
-    # Build the apk
-    sbt clean android:package-release
-```
+使用的库
 
-## OPEN SOURCE LICENSES
+<ul>
+    <li>redsocks: <a href="https://github.com/shadowsocks/redsocks/blob/shadowsocks-android/README">APL 2.0</a></li>
+    <li>mbed TLS: <a href="https://github.com/ARMmbed/mbedtls/blob/development/LICENSE">APL 2.0</a></li>
+    <li>libevent: <a href="https://github.com/shadowsocks/libevent/blob/master/LICENSE">BSD</a></li>
+    <li>tun2socks: <a href="https://github.com/shadowsocks/badvpn/blob/shadowsocks-android/COPYING">BSD</a></li>
+    <li>pcre: <a href="https://android.googlesource.com/platform/external/pcre/+/master/dist2/LICENCE">BSD</a></li>
+    <li>libancillary: <a href="https://github.com/shadowsocks/libancillary/blob/shadowsocks-android/COPYING">BSD</a></li>
+    <li>shadowsocksr-libev: <a href="https://github.com/shadowsocksRb/shadowsocksr-libev/blob/master/LICENSE">GPLv3</a></li>
+    <li>libsodium: <a href="https://github.com/jedisct1/libsodium/blob/master/LICENSE">ISC</a></li>
+</ul>
 
-* shadowsocks-libev: [GPLv3](https://github.com/shadowsocks/shadowsocks-libev/blob/master/LICENSE)
-* tun2socks: [BSD](https://github.com/shadowsocks/badvpn/blob/shadowsocks-android/COPYING)
-* redsocks: [APL 2.0](https://github.com/shadowsocks/redsocks/blob/master/README)
-* OpenSSL: [OpenSSL](https://github.com/shadowsocks/openssl-android/blob/master/NOTICE)
-* pdnsd: [GPLv3](https://github.com/shadowsocks/shadowsocks-android/blob/master/src/main/jni/pdnsd/COPYING)
-* libev: [GPLv2](https://github.com/shadowsocks/shadowsocks-android/blob/master/src/main/jni/libev/LICENSE)
-* libevent: [BSD](https://github.com/shadowsocks/libevent/blob/master/LICENSE)
-
-### LICENSE
-
-Copyright (C) 2016 by Max Lv <<max.c.lv@gmail.com>> <br/>
-Copyright (C) 2016 by Mygod Studio <<mygodstudio@gmail.com>>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
+<ul>
+    <li>AndroidX: <a href="https://android.googlesource.com/platform/frameworks/support/+/androidx-master-dev/LICENSE.txt">APL 2.0</a></li>
+    <li>kotlin: <a href="https://github.com/JetBrains/kotlin/blob/master/license/LICENSE.txt">APL 2.0</a></li>
+    <li>material: <a href="https://github.com/material-components/material-components-android/blob/master/LICENSE">APL 2.0</a></li>
+    <li>gson: <a href="https://github.com/google/gson/blob/master/LICENSE">APL 2.0</a></li>
+    <li>dnsjava: <a href="https://github.com/dnsjava/dnsjava/blob/master/LICENSE">BSD</a></li>
+    <li>jsocks: <a href="https://android.googlesource.com/platform/external/pcre/+/master/dist2/LICENCE">LGPL 2.1</a></li>
+    <li>preferencex-simplemenu: <a href="https://github.com/takisoft/preferencex-android/blob/master/LICENSE">APL 2.0</a></li>
+    <li>android-plugin-api-for-locale: <a href="https://github.com/twofortyfouram/android-plugin-api-for-locale/blob/master/LICENSE.txt">APL 2.0</a></li>
+    <li>qrgen: <a href="https://github.com/kenglxn/QRGen">APL 2.0</a></li>
+</ul>
