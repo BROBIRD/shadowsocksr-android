@@ -456,7 +456,7 @@ class ShadowsocksSettings extends PreferenceFragment with OnSharedPreferenceChan
         try {
           try{
             IOUtils.writeString(app.getApplicationInfo.dataDir + '/' + routename + ".acl", autoClose(
-            new URL("https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/" + routename + ".acl").openConnection().getInputStream())(IOUtils.readString))
+            new URL("https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@latest/" + routename + ".acl").openConnection().getInputStream())(IOUtils.readString))
             progressDialog.dismiss()
           }
           catch{
