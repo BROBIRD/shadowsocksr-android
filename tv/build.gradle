@@ -19,6 +19,9 @@ def getCurrentFlavor() {
 }
 
 android {
+    lintOptions {
+          abortOnError false
+      }
     compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
         applicationId "com.github.shadowsocks.tv"
