@@ -33,4 +33,4 @@
 [submodule "core/src/main/jni/overture"]
 	path = core/src/main/jni/overture
 	url = https://github.com/shawn1m/overture.git
-	branch = v1.6-rc9
+	branch = adccb00
