@@ -14,6 +14,10 @@ def getCurrentFlavor() {
 }
 
 android {
+    lintOptions {
+          abortOnError false
+      }
+
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
