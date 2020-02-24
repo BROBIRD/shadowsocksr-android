@@ -27,7 +27,6 @@ import com.github.shadowsocks.utils.parseNumericAddress
 import java.io.File
 import java.net.InetAddress
 
-@RequiresApi(Build.VERSION_CODES.N)
 class HostsFile(input: String = "") {
     private val map = mutableMapOf<String, MutableSet<InetAddress>>()
     var hosts = File(Core.deviceStorage.noBackupFilesDir, "hosts")
