@@ -30,3 +30,7 @@
 [submodule "core/src/main/jni/re2"]
 	path = core/src/main/jni/re2
 	url = https://github.com/google/re2.git
+[submodule "core/src/main/jni/overture"]
+	path = core/src/main/jni/overture
+	url = https://github.com/shadowsocks/overture.git
+	branch = adccb00

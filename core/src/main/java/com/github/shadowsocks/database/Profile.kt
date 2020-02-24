@@ -58,6 +58,7 @@ data class Profile(
         var method: String = "aes-256-cfb",
 
         var route: String = "all",
+        var directDns: String = "114.114.114.114:53",
         var remoteDns: String = "8.8.8.8:53",
         var proxyApps: Boolean = false,
         var bypass: Boolean = false,
@@ -254,6 +255,7 @@ data class Profile(
                     route = json["route"].optString ?: route
                     if (fallback) return@apply
                     remoteDns = json["remote_dns"].optString ?: remoteDns
+                    directDns = json["direct_dns"].optString ?: directDns
                     ipv6 = json["ipv6"].optBoolean ?: ipv6
                     metered = json["metered"].optBoolean ?: metered
                     (json["proxy_apps"] as? JsonObject)?.also {
@@ -349,6 +351,7 @@ data class Profile(
     fun copyFeatureSettingsTo(profile: Profile, withMore: Boolean = false) {
         profile.route = route
         profile.remoteDns = remoteDns
+        profile.directDns = directDns
         profile.ipv6 = ipv6
         profile.metered = metered
         profile.proxyApps = proxyApps
@@ -398,6 +401,7 @@ data class Profile(
         put("remarks", name)
         put("route", route)
         put("remote_dns", remoteDns)
+        put("direct_dns", directDns)
         put("ipv6", ipv6)
         put("metered", metered)
         put("proxy_apps", JSONObject().apply {
@@ -422,6 +426,7 @@ data class Profile(
         DataStore.privateStore.putString(Key.password, password)
         DataStore.privateStore.putString(Key.route, route)
         DataStore.privateStore.putString(Key.remoteDns, remoteDns)
+        DataStore.privateStore.putString(Key.directDns, directDns)
         DataStore.privateStore.putString(Key.protocol, protocol)
         DataStore.privateStore.putString(Key.protocol_param, protocol_param)
         DataStore.privateStore.putString(Key.obfs, obfs)
@@ -455,6 +460,7 @@ data class Profile(
         method = DataStore.privateStore.getString(Key.method) ?: ""
         route = DataStore.privateStore.getString(Key.route) ?: ""
         remoteDns = DataStore.privateStore.getString(Key.remoteDns) ?: ""
+        directDns = DataStore.privateStore.getString(Key.directDns) ?: ""
         proxyApps = DataStore.proxyApps
         bypass = DataStore.bypass
         udpdns = DataStore.privateStore.getBoolean(Key.udpdns, false)

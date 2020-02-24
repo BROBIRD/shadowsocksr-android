@@ -84,25 +84,30 @@
             app:summary="@string/ipv6_summary"
             app:title="@string/ipv6" />
         <SwitchPreference
-            app:icon="@drawable/ic_navigation_apps"
-            app:key="isProxyApps"
-            app:summary="@string/proxied_apps_summary"
-            app:title="@string/proxied_apps" />
+                app:icon="@drawable/ic_navigation_apps"
+                app:key="isProxyApps"
+                app:summary="@string/proxied_apps_summary"
+                app:title="@string/proxied_apps"/>
         <SwitchPreference
-            app:icon="@drawable/ic_device_data_usage"
-            app:key="metered"
-            app:summary="@string/metered_summary"
-            app:title="@string/metered" />
+                app:icon="@drawable/ic_device_data_usage"
+                app:key="metered"
+                app:summary="@string/metered_summary"
+                app:title="@string/metered"/>
         <EditTextPreference
-            app:icon="@drawable/ic_action_dns"
-            app:key="remoteDns"
-            app:title="@string/remote_dns"
-            app:useSimpleSummaryProvider="true" />
+                app:icon="@drawable/ic_action_dns"
+                app:key="remoteDns"
+                app:title="@string/remote_dns"
+                app:useSimpleSummaryProvider="true"/>
+        <EditTextPreference
+                app:icon="@drawable/ic_action_dns"
+                app:key="directDns"
+                app:title="@string/direct_dns"
+                app:useSimpleSummaryProvider="true"/>
         <SwitchPreference
-            app:icon="@drawable/ic_action_dns"
-            app:key="isUdpDns"
-            app:summary="@string/udp_dns_summary"
-            app:title="@string/udp_dns" />
+                app:icon="@drawable/ic_action_dns"
+                app:key="isUdpDns"
+                app:summary="@string/udp_dns_summary"
+                app:title="@string/udp_dns"/>
 
     </PreferenceCategory>
 

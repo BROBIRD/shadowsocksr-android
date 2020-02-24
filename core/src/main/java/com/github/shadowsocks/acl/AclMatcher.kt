@@ -54,6 +54,7 @@ class AclMatcher : AutoCloseable {
     private var subnetsIpv4 = emptyList<Subnet.Immutable>()
     private var subnetsIpv6 = emptyList<Subnet.Immutable>()
     private var bypass = false
+    private var remoteDns = false
 
     suspend fun init(id: String) = init(Acl.getFile(id).bufferedReader())
     suspend fun init(reader: Reader) {
@@ -70,7 +71,7 @@ class AclMatcher : AutoCloseable {
         check(handle == 0L)
         handle = init()
         try {
-            val (bypass, subnets) = Acl.parse(reader, {
+            val (bypass, remoteDns, subnets) = Acl.parse(reader, {
                 check(addBypassDomain(handle, it))
             }, {
                 check(addProxyDomain(handle, it))
@@ -79,6 +80,7 @@ class AclMatcher : AutoCloseable {
             subnetsIpv4 = subnets.asSequence().filter { it.address is Inet4Address }.dedup()
             subnetsIpv6 = subnets.asSequence().filter { it.address is Inet6Address }.dedup()
             this.bypass = bypass
+            this.remoteDns = remoteDns
         } catch (e: Exception) {
             close()
             throw e

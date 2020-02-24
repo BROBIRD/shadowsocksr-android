@@ -20,45 +20,123 @@
 
 package com.github.shadowsocks.bg
 
+import com.github.shadowsocks.Core
+import com.github.shadowsocks.Core.app
 import com.github.shadowsocks.acl.Acl
-import com.github.shadowsocks.acl.AclMatcher
 import com.github.shadowsocks.net.HostsFile
-import com.github.shadowsocks.net.LocalDnsServer
-import com.github.shadowsocks.net.Socks5Endpoint
 import com.github.shadowsocks.preference.DataStore
-import kotlinx.coroutines.CoroutineScope
-import java.net.InetSocketAddress
-import java.net.URI
-import java.net.URISyntaxException
-import java.util.*
+import com.github.shadowsocks.utils.asIterable
+import com.github.shadowsocks.utils.parseNumericAddress
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
+import java.net.Inet4Address
+import java.net.Inet6Address
 
 object LocalDnsService {
-    private val servers = WeakHashMap<Interface, LocalDnsServer>()
-
     interface Interface : BaseService.Interface {
         override suspend fun startProcesses(hosts: HostsFile) {
             super.startProcesses(hosts)
+            val data = data
             val profile = data.proxy!!.profile
-            val dns = try {
-                URI("dns://${profile.remoteDns}")
-            } catch (e: URISyntaxException) {
-                throw BaseService.ExpectedExceptionWrapper(e)
-            }
-            LocalDnsServer(this::resolver,
-                    Socks5Endpoint(dns.host, if (dns.port < 0) 53 else dns.port),
-                    DataStore.proxyAddress,
-                    hosts,
-                    !profile.udpdns,
-                    if (profile.route == Acl.ALL) null else object {
-                        suspend fun createAcl() = AclMatcher().apply { init(profile.route) }
-                    }::createAcl).also {
-                servers[this] = it
-            }.start(InetSocketAddress(DataStore.listenAddress, DataStore.portLocalDns))
-        }
+            val acl = if (profile.route == Acl.ALL) null else Acl().fromReader(Acl.getFile(profile.route).bufferedReader())
+            val remotedns = acl?.remoteDns
+            val proxyDomains = File(Core.deviceStorage.noBackupFilesDir, "proxyDomains")
+            val bypassDomains = File(Core.deviceStorage.noBackupFilesDir, "bypassDomains")
+            val dotpattern = "(?:[Tt][Ll][Ss])://[\\w-.]+(:\\d{1,5})*".toRegex()
+            val dohpattern = "[Hh][Tt]{2}[Pp][Ss]://[\\w-.]+(:\\d{1,5})*/dns_query".toRegex()
 
-        override fun killProcesses(scope: CoroutineScope) {
-            servers.remove(this)?.shutdown(scope)
-            super.killProcesses(scope)
+            for (domain in acl?.proxyHostnames?.asIterable()!!) {
+                proxyDomains.appendText("\n" + domain)
+            }
+            for (domain in acl.bypassHostnames.asIterable()) {
+                bypassDomains.appendText("\n" + domain)
+            }
+
+            fun makeDns(name: String, address: String, timeout: Int, proxy: Boolean = true) = JSONObject().apply {
+                put("Name", name)
+                put("Address", when (address.parseNumericAddress()) {
+                    is Inet6Address -> "[$address]:53"
+                    is Inet4Address -> "$address:53"
+                    else -> address
+                })
+                put("Timeout", timeout)
+                put("EDNSClientSubnet", JSONObject().put("Policy", "disable"))
+                if (proxy) {
+                    put("Socks5Address", "127.0.0.1:${DataStore.portProxy}")
+                }
+                put("Protocol",
+                        if (address.matches(dotpattern)) {
+                            "tcp-tls"
+                        } else if (address.matches(dohpattern)) {
+                            "https"
+                        } else if (proxy) {
+                            "tcp"
+                        } else {
+                            "udp"
+                        }
+                )
+            }
+
+            fun buildOvertureConfig(file: String) = file.also {
+                File(Core.deviceStorage.noBackupFilesDir, it).writeText(JSONObject().run {
+                    put("BindAddress", "${DataStore.listenAddress}:${DataStore.portLocalDns}")
+                    put("RedirectIPv6Record", true)
+                    put("DomainBase64Decode", false)
+                    put("HostsFile", hosts.hosts.absolutePath)
+                    put("MinimumTTL", 120)
+                    put("CacheSize", 4096)
+                    val remoteDns = JSONArray(profile.remoteDns.split(",")
+                            .mapIndexed { i, dns -> makeDns("UserDef-Remote-$i", dns.trim(), 12) })
+                    val directDns = JSONArray(profile.directDns.split(",")
+                            .mapIndexed { i, dns -> makeDns("UserDef-Direct-$i", dns.trim(), 12, false) })
+                    val localDns = JSONArray(arrayOf(
+                            makeDns("Primary-1", "114.114.114.114:53", 9, false),
+                            makeDns("Primary-2", "180.76.76.76:53", 9, false),
+                            makeDns("Primary-3", "119.29.29.29:53", 9, false)))
+                    when (profile.route) {
+                        Acl.BYPASS_CHN, Acl.BYPASS_LAN_CHN, Acl.GFWLIST -> {
+                            put("PrimaryDNS", directDns ?: localDns)
+                            put("AlternativeDNS", remoteDns)
+                            put("IPNetworkFile", JSONObject(mapOf("Alternative" to "china_ip_list.txt")))
+                            put("DomainFile", JSONObject(mapOf("Primary" to bypassDomains.absolutePath, "Alternative" to proxyDomains.absolutePath)))
+                        }
+                        Acl.CUSTOM_RULES -> {
+                            if (remotedns!!) {
+                                put("PrimaryDNS", remoteDns)
+                                // no need to setup AlternativeDNS in Acl.ALL/BYPASS_LAN mode
+                                put("OnlyPrimaryDNS", true)
+                            } else {
+                                put("PrimaryDNS", directDns ?: localDns)
+                                put("AlternativeDNS", remoteDns)
+                                put("IPNetworkFile", JSONObject(mapOf("Alternative" to "china_ip_list.txt")))
+                                put("DomainFile", JSONObject(mapOf("Primary" to bypassDomains.absolutePath, "Alternative" to proxyDomains.absolutePath)))
+                            }
+                        }
+                        Acl.CHINALIST -> {
+                            val primary = directDns ?: localDns
+                            for (i in 0 until primary.length()) {
+                                primary.getJSONObject(i).put("Socks5Address", "")
+                            }
+                            for (i in 0 until remoteDns.length()) {
+                                remoteDns.getJSONObject(i).put("Socks5Address", "127.0.0.1:${DataStore.portProxy}")
+                            }
+                            put("PrimaryDNS", (directDns ?: localDns))
+                            put("AlternativeDNS", remoteDns)
+                        }
+                        else -> {
+                            put("PrimaryDNS", remoteDns)
+                            // no need to setup AlternativeDNS in Acl.ALL/BYPASS_LAN mode
+                            put("OnlyPrimaryDNS", true)
+                        }
+                    }
+                    toString()
+                })
+            }
+
+            data.processes!!.start(buildAdditionalArguments(arrayListOf(
+                    File(app.applicationInfo.nativeLibraryDir, Executable.OVERTURE).absolutePath,
+                    "-c", buildOvertureConfig("overture.conf"))))
         }
     }
 }

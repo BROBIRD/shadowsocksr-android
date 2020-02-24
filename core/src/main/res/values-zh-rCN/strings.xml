@@ -16,6 +16,7 @@
     <string name="port_transproxy">"透明代理端口"</string>
 
     <string name="remote_dns">"远程 DNS"</string>
+    <string name="direct_dns">"直连 DNS"</string>
     <string name="traffic">%1$s↑\t%2$s↓</string>
     <string name="stat_summary">"上传: \t%3$s\t↑\t%1$s\n下载: \t%4$s\t↓\t%2$s"</string>
     <string name="speed">%s/s</string>

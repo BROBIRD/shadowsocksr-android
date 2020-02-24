@@ -1,6 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def getCurrentFlavor() {
+    String task = getGradle().getStartParameter().getTaskRequests().toString()
+    Matcher matcher = Pattern.compile("(assemble|generate)\\w*(Release|Debug)").matcher(task)
+    if (matcher.find()) return matcher.group(2).toLowerCase() else {
+        println "Warning: No match found for $task"
+        return "debug"
+    }
+}
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -46,6 +57,16 @@ android {
     packagingOptions {
         exclude '/META-INF/*.version'
         exclude '**/*.kotlin_*'
+        splits {
+        abi {
+            enable true
+            universalApk true
+        }
+    }
+        sourceSets.main.jniLibs.srcDirs +=
+            new File(project(':core').buildDir, "intermediates/bundles/${getCurrentFlavor()}/jni")
+        sourceSets.main.jniLibs.srcDirs += new File(project(':core').projectDir, "build/go")
+
     }
     aaptOptions.additionalParameters "--preferred-density", "xxxhdpi"
     kotlinOptions.jvmTarget = javaVersion

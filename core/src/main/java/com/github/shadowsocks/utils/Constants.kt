@@ -64,6 +64,7 @@ object Key {
     const val obfs_param = "ssrObfsParam"
     const val remotePort = "remotePortNum"
     const val remoteDns = "remoteDns"
+    const val directDns = "directDns"
 
     const val plugin = "plugin"
     const val pluginConfigure = "plugin.configure"

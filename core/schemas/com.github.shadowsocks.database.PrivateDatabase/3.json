@@ -75,6 +75,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "directDns",
+            "columnName": "directDns",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "remoteDns",
             "columnName": "remoteDns",
             "affinity": "TEXT",

@@ -1,3 +1,4 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -43,6 +44,23 @@ android {
 
 androidExtensions {
     experimental = true
+}
+
+task goBuild(type: Exec) {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        println "Warning: Building on Windows is not supported"
+    } else {
+        executable "/bin/bash"
+        args "go-build.bash", minSdkVersion
+        environment "ANDROID_HOME", android.sdkDirectory
+        environment "ANDROID_NDK_HOME", android.ndkDirectory
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if ((task.name == 'generateJsonModelDebug' || task.name == 'generateJsonModelRelease')) {
+        task.dependsOn(goBuild)
+    }
 }
 
 def coroutinesVersion = '1.3.3'
