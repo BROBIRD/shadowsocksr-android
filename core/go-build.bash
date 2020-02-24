@@ -6,6 +6,7 @@ apt-get install wget -y
 wget https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz
 tar -xvf upx-${UPX_VERSION}-amd64_linux.tar.xz
 UPX_PATH="$(pwd)/upx-${UPX_VERSION}-amd64_linux"
+chmod +x ${UPX_PATH}/upx
 
 [[ -z "${ANDROID_NDK_HOME}" ]] && ANDROID_NDK_HOME="${ANDROID_HOME}/ndk-bundle"
 TOOLCHAIN="$(find ${ANDROID_NDK_HOME}/toolchains/llvm/prebuilt/* -maxdepth 1 -type d -print -quit)/bin"
