@@ -1,6 +1,5 @@
 #!/bin/bash
 UPX_VERSION="3.96"
-UPX_COMMAND="--brute --android-shlib"
 
 apt-get install wget -y
 wget https://github.com/upx/upx/releases/download/v${UPX_VERSION}/upx-${UPX_VERSION}-amd64_linux.tar.xz
@@ -31,7 +30,7 @@ for i in "${!ABIS[@]}"; do
         GOOS=android GOARCH=${GO_ARCHS[$i]} \
         go build -v -ldflags='-s -w' -o "${OUT_DIR}/unstripped" \
     && "${TOOLCHAIN}/${STRIP_ARCHS[$i]}-strip" "${OUT_DIR}/unstripped" -o "${OUT_DIR}/uncompressed" \
-    && "${UPX_PATH}/upx" "${UPX_COMMAND}" -o "${OUT_DIR}/${ABI}/${BIN}" "${OUT_DIR}/uncompressed" \
+    && "${UPX_PATH}/upx" --brute --android-shlib -o "${OUT_DIR}/${ABI}/${BIN}" "${OUT_DIR}/uncompressed" \
     || exit -1
     rm "${OUT_DIR}/unstripped" "${OUT_DIR}/uncompressed"
 done
