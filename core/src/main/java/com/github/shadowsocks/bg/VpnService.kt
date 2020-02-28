@@ -163,7 +163,7 @@ class VpnService : BaseVpnService(), LocalDnsService.Interface {
                 .setSession(profile.formattedName)
                 .setMtu(VPN_MTU)
                 .addAddress(PRIVATE_VLAN4_CLIENT, 30)
-                .addDnsServer(PRIVATE_VLAN4_ROUTER)
+//                .addDnsServer(PRIVATE_VLAN4_ROUTER)
 
         if (profile.ipv6) builder.addAddress(PRIVATE_VLAN6_CLIENT, 126)
 
@@ -183,7 +183,7 @@ class VpnService : BaseVpnService(), LocalDnsService.Interface {
         }
 
         when (profile.route) {
-            Acl.ALL, Acl.BYPASS_CHN, Acl.CUSTOM_RULES -> {
+            Acl.ALL, Acl.BYPASS_CHN -> {
                 builder.addRoute("0.0.0.0", 0)
                 if (profile.ipv6) builder.addRoute("::", 0)
             }

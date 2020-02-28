@@ -20,8 +20,6 @@
 
 package com.github.shadowsocks.net
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.github.shadowsocks.Core
 import com.github.shadowsocks.utils.parseNumericAddress
 import java.io.File
@@ -33,12 +31,12 @@ class HostsFile(input: String = "") {
 
     init {
         for (line in input.lineSequence()) {
-            hosts.appendText("\n127.0.0.1\tlocalhost")
             hosts.appendText("\n" + line)
             val entries = line.substringBefore('#').splitToSequence(' ', '\t').filter { it.isNotEmpty() }
             val address = entries.firstOrNull()?.parseNumericAddress() ?: continue
             for (hostname in entries.drop(1)) map.computeIfAbsent(hostname) { LinkedHashSet(1) }.add(address)
         }
+        hosts.appendText("\n127.0.0.1\tlocalhost")
     }
 
     val configuredHostnames get() = map.size

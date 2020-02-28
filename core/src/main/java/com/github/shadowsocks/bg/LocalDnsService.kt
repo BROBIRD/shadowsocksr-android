@@ -43,14 +43,15 @@ object LocalDnsService {
             val remotedns = acl?.remoteDns
             val proxyDomains = File(Core.deviceStorage.noBackupFilesDir, "proxyDomains")
             val bypassDomains = File(Core.deviceStorage.noBackupFilesDir, "bypassDomains")
-            val dotpattern = "(?:[Tt][Ll][Ss])://[\\w-.]+(:\\d{1,5})*".toRegex()
-            val dohpattern = "[Hh][Tt]{2}[Pp][Ss]://[\\w-.]+(:\\d{1,5})*/dns_query".toRegex()
+            val dotpattern = "(?:[Tt][Ll][Ss])://[\\w-.]+(:853)@((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}".toRegex()
 
-            for (domain in acl?.proxyHostnames?.asIterable()!!) {
-                proxyDomains.appendText("\n" + domain)
-            }
-            for (domain in acl.bypassHostnames.asIterable()) {
-                bypassDomains.appendText("\n" + domain)
+            if(acl!=null){
+                for (domain in acl.proxyHostnames.asIterable()) {
+                    proxyDomains.appendText("\n" + domain)
+                }
+                for (domain in acl.bypassHostnames.asIterable()) {
+                    bypassDomains.appendText("\n" + domain)
+                }
             }
 
             fun makeDns(name: String, address: String, timeout: Int, proxy: Boolean = true) = JSONObject().apply {
@@ -68,8 +69,6 @@ object LocalDnsService {
                 put("Protocol",
                         if (address.matches(dotpattern)) {
                             "tcp-tls"
-                        } else if (address.matches(dohpattern)) {
-                            "https"
                         } else if (proxy) {
                             "tcp"
                         } else {
@@ -83,7 +82,7 @@ object LocalDnsService {
                     put("BindAddress", "${DataStore.listenAddress}:${DataStore.portLocalDns}")
                     put("RedirectIPv6Record", true)
                     put("DomainBase64Decode", false)
-                    put("HostsFile", hosts.hosts.absolutePath)
+                    put("HostsFile", "hosts")
                     put("MinimumTTL", 120)
                     put("CacheSize", 4096)
                     val remoteDns = JSONArray(profile.remoteDns.split(",")
@@ -98,8 +97,8 @@ object LocalDnsService {
                         Acl.BYPASS_CHN, Acl.BYPASS_LAN_CHN, Acl.GFWLIST -> {
                             put("PrimaryDNS", directDns ?: localDns)
                             put("AlternativeDNS", remoteDns)
-                            put("IPNetworkFile", JSONObject(mapOf("Alternative" to "china_ip_list.txt")))
-                            put("DomainFile", JSONObject(mapOf("Primary" to bypassDomains.absolutePath, "Alternative" to proxyDomains.absolutePath)))
+                            put("IPNetworkFile", JSONObject(mapOf("Primary" to "china_ip_list.txt")))
+                            put("DomainFile", JSONObject(mapOf("Primary" to "bypassDomains", "Alternative" to "proxyDomains")))
                         }
                         Acl.CUSTOM_RULES -> {
                             if (remotedns!!) {
@@ -109,8 +108,8 @@ object LocalDnsService {
                             } else {
                                 put("PrimaryDNS", directDns ?: localDns)
                                 put("AlternativeDNS", remoteDns)
-                                put("IPNetworkFile", JSONObject(mapOf("Alternative" to "china_ip_list.txt")))
-                                put("DomainFile", JSONObject(mapOf("Primary" to bypassDomains.absolutePath, "Alternative" to proxyDomains.absolutePath)))
+                                put("IPNetworkFile", JSONObject(mapOf("Primary" to "china_ip_list.txt")))
+                                put("DomainFile", JSONObject(mapOf("Primary" to "bypassDomains", "Alternative" to "proxyDomains")))
                             }
                         }
                         Acl.CHINALIST -> {
