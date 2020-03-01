@@ -10,8 +10,8 @@ buildscript {
         compileSdkVersion = 29
         buildToolsVersion = '29.0.2'
         desugarLibsVersion = '1.0.4'
-        versionCode = 406
-        versionName = '5.0.4R'
+        versionCode = 0
+        versionName = '5.0.5R'
         resConfigs = ['zh-rCN']
     }
 
@@ -21,7 +21,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0-alpha09'
+        classpath 'com.android.tools.build:gradle:4.0.0-beta01'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }

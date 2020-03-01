@@ -7,6 +7,12 @@
         <item>@string/route_entry_bypass_lan_chn</item>
         <item>@string/route_entry_gfwlist</item>
         <item>@string/route_entry_chinalist</item>
+        <item>@string/route_entry_gfwlist_banAD</item>
+        <item>@string/route_entry_banAD</item>
+        <item>@string/route_entry_fullgfwlist</item>
+        <item>@string/route_entry_nobanAD</item>
+        <item>@string/route_entry_backcn_banAD</item>
+        <item>@string/route_entry_onlybanAD</item>
         <item>@string/custom_rules</item>
     </string-array>
     <string-array name="route_value" translatable="false">
@@ -17,6 +23,12 @@
         <item>gfwlist</item>
         <item>china-list</item>
         <item>custom-rules</item>
+        <item>gfwlist-banAD</item>
+        <item>banAD</item>
+        <item>fullgfwlist</item>
+        <item>nobanAD</item>
+        <item>backcn-banAD</item>
+        <item>onlybanAD</item>
     </string-array>
 
     <string-array name="acl_rule_templates" translatable="false">

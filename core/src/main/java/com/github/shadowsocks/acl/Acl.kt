@@ -48,6 +48,12 @@ class Acl {
         const val GFWLIST = "gfwlist"
         const val CHINALIST = "china-list"
         const val CUSTOM_RULES = "custom-rules"
+        const val ACL4SSR_AG = "gfwlist-banAD"
+        const val ACL4SSR_AP = "banAD"
+        const val ACL4SSR_AB = "backcn-banAD"
+        const val ACL4SSR_AA = "onlybanAD"
+        const val ACL4SSR_NG = "fullgfwlist"
+        const val ACL4SSR_NP = "nobanAD"
 
         fun getFile(id: String, context: Context = Core.deviceStorage) = File(context.noBackupFilesDir, "$id.acl")
 

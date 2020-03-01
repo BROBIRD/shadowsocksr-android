@@ -15,14 +15,14 @@ def getCurrentFlavor() {
 
 android {
     lintOptions {
-          abortOnError false
-      }
+        abortOnError false
+    }
 
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "io.github.shadowsocksrb"
+        applicationId "io.github.shadowsocksrb.mod"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.sdkVersion
         versionCode rootProject.versionCode
@@ -62,13 +62,13 @@ android {
         exclude '/META-INF/*.version'
         exclude '**/*.kotlin_*'
         splits {
-        abi {
-            enable true
-            universalApk true
+            abi {
+                enable true
+                universalApk true
+            }
         }
-    }
         sourceSets.main.jniLibs.srcDirs +=
-            new File(project(':core').buildDir, "intermediates/bundles/${getCurrentFlavor()}/jni")
+                new File(project(':core').buildDir, "intermediates/bundles/${getCurrentFlavor()}/jni")
         sourceSets.main.jniLibs.srcDirs += new File(project(':core').projectDir, "build/go")
 
     }

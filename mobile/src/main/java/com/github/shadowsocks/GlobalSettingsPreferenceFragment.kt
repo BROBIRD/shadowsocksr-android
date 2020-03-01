@@ -79,6 +79,11 @@ class GlobalSettingsPreferenceFragment : PreferenceFragmentCompat() {
             tfo.summary = getString(R.string.tcp_fastopen_summary_unsupported, System.getProperty("os.version"))
         }
 
+        findPreference<Preference>("ignore_battery_optimization")?.setOnPreferenceClickListener {
+            (activity as MainActivity).ignoreBatteryOptimization()
+            true
+        }
+
         hosts.setOnBindEditTextListener(EditTextPreferenceModifiers.Monospace)
         hosts.summaryProvider = HostsSummaryProvider
         val serviceMode = findPreference<Preference>(Key.serviceMode)!!

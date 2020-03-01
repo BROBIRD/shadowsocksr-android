@@ -51,6 +51,12 @@
     <string name="route_entry_bypass_lan_chn">"绕过局域网及中国大陆地址"</string>
     <string name="route_entry_gfwlist">"GFW 列表"</string>
     <string name="route_entry_chinalist">"仅代理中国大陆地址"</string>
+    <string name="route_entry_gfwlist_banAD">ACLSSR去广告黑名单</string>
+    <string name="route_entry_banAD">ACL4SSR去广告白名单</string>
+    <string name="route_entry_backcn_banAD">ACL4SSR去广告回国模式</string>
+    <string name="route_entry_onlybanAD">ACL4SSR仅去广告</string>
+    <string name="route_entry_fullgfwlist">ACL4SSR仅黑名单</string>
+    <string name="route_entry_nobanAD">ACL4SSR仅白名单</string>
     <string name="proxied_apps">"分应用 VPN"</string>
     <string name="proxied_apps_summary">"允许部分应用绕过 VPN"</string>
     <string name="on">"启用"</string>
@@ -65,6 +71,8 @@
     <string name="tcp_fastopen_summary">"切换可能需要 ROOT 权限"</string>
     <string name="tcp_fastopen_summary_unsupported">"不支持的内核版本: %s &lt; 3.7.1"</string>
     <string name="tcp_fastopen_failure">"切换失败"</string>
+    <string name="ignore_battery_optimization">忽略电池优化</string>
+    <string name="ignore_battery_optimization_summary">请求忽略电池优化</string>
     <plurals name="hosts_summary">
         <item quantity="other">配置了 %d 个主机名</item>
     </plurals>

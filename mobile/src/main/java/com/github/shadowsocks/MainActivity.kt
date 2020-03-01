@@ -20,16 +20,18 @@
 
 package com.github.shadowsocks
 
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.app.backup.BackupManager
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutManager
+import android.net.Uri
 import android.net.VpnService
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.RemoteException
+import android.os.*
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
@@ -81,6 +83,45 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
         anchorView = fab
     }
 
+    @SuppressLint("BatteryLife")
+    @TargetApi(Build.VERSION_CODES.M)
+    fun ignoreBatteryOptimization(): Boolean {
+        var exception: Boolean
+        try {
+            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+            val packageName = packageName
+            var hasIgnored = true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                hasIgnored = powerManager.isIgnoringBatteryOptimizations(packageName)
+            }
+            if (!hasIgnored) {
+                val intent = Intent()
+                intent.action = android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                intent.data = Uri.parse("package:$packageName")
+                startActivity(intent)
+            }
+            exception = false
+        } catch (e: Throwable) {
+            exception = true
+        }
+        if (exception) {
+            try {
+                val intent = Intent(Intent.ACTION_MAIN)
+                intent.addCategory(Intent.CATEGORY_LAUNCHER)
+                val cn = ComponentName(
+                        "com.android.settings",
+                        "com.android.com.settings.Settings@HighPowerApplicationsActivity"
+                )
+                intent.component = cn
+                startActivity(intent)
+                exception = false
+            } catch (e: Throwable) {
+                exception = true
+            }
+        }
+        return exception
+    }
+
     private val customTabsIntent by lazy {
         CustomTabsIntent.Builder().apply {
             setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
@@ -92,6 +133,7 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
             }.build())
         }.build()
     }
+
     fun launchUrl(uri: String) = try {
         customTabsIntent.launchUrl(this, uri.toUri())
     } catch (_: ActivityNotFoundException) {
@@ -100,8 +142,10 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
 
     // service
     var state = BaseService.State.Idle
+
     override fun stateChanged(state: BaseService.State, profileName: String?, msg: String?) =
             changeState(state, msg, true)
+
     override fun trafficUpdated(profileId: Long, stats: TrafficStats) {
         if (profileId == 0L) this@MainActivity.stats.updateTraffic(
                 stats.txRate, stats.rxRate, stats.txTotal, stats.rxTotal)
@@ -110,6 +154,7 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
                     ?.onTrafficUpdated(profileId, stats)
         }
     }
+
     override fun trafficPersisted(profileId: Long) {
         ProfilesFragment.instance?.onTrafficPersisted(profileId)
     }
@@ -163,6 +208,7 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
     } catch (_: RemoteException) {
         BaseService.State.Idle
     })
+
     override fun onServiceDisconnected() = changeState(BaseService.State.Idle)
     override fun onBinderDied() {
         connection.disconnect(this)

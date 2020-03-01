@@ -45,7 +45,7 @@ object LocalDnsService {
             val bypassDomains = File(Core.deviceStorage.noBackupFilesDir, "bypassDomains")
             val dotpattern = "(?:[Tt][Ll][Ss])://[\\w-.]+(:853)@((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}".toRegex()
 
-            if(acl!=null){
+            if (acl != null) {
                 for (domain in acl.proxyHostnames.asIterable()) {
                     proxyDomains.appendText("\n" + domain)
                 }
@@ -100,7 +100,7 @@ object LocalDnsService {
                             put("IPNetworkFile", JSONObject(mapOf("Primary" to "china_ip_list.txt")))
                             put("DomainFile", JSONObject(mapOf("Primary" to "bypassDomains", "Alternative" to "proxyDomains")))
                         }
-                        Acl.CUSTOM_RULES -> {
+                        Acl.CUSTOM_RULES, Acl.ACL4SSR_AA, Acl.ACL4SSR_AB, Acl.ACL4SSR_AG, Acl.ACL4SSR_AP, Acl.ACL4SSR_NG, Acl.ACL4SSR_NP -> {
                             if (remotedns!!) {
                                 put("PrimaryDNS", remoteDns)
                                 // no need to setup AlternativeDNS in Acl.ALL/BYPASS_LAN mode

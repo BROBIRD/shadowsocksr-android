@@ -27,7 +27,8 @@
     <string name="direct_dns">"直連 DNS"</string>
     <string name="remote_dns">"遠程 DNS"</string>
     <string name="stat_summary">"傳送: \t%3$s\t↑\t%1$s/s
-接收: \t%4$s\t↓\t%2$s/s"</string>
+        接收: \t%4$s\t↓\t%2$s/s"
+    </string>
     <string name="connection_test_testing">"測試中……"</string>
     <string name="connection_test_available">"成功: HTTPS 握手延遲 %d 毫秒"</string>
     <string name="connection_test_error">"偵測出網際網路連線失敗: %s"</string>
@@ -186,6 +187,8 @@
     <string name="connection_test_pending">"檢查連接"</string>
     <string name="file_manager_missing">"請安裝文件管理器，如 MiXplorer"</string>
     <string name="tcp_fastopen_failure">"切換失敗"</string>
+    <string name="ignore_battery_optimization">忽略電池優化</string>
+    <string name="ignore_battery_optimization_summary">請求忽略電池優化</string>
     <string name="udp_fallback">"UDP 配置"</string>
     <string name="action_replace_file">"從文件替換…"</string>
     <string name="off">"關"</string>
