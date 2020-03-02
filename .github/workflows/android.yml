@@ -1,0 +1,43 @@
+name: Android CI
+
+on:
+  push:
+    tags: "v*"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - uses: actions/setup-go@v1
+        with:
+          go-version: '1.14'
+      - name: set up NDK
+        env:
+          ndk_version: android-ndk-r21
+          ANDROID_NDK_HOME: /opt/android/${ndk_version}
+        run: |
+          curl --silent --show-error --location --fail --retry 3 --output /tmp/${ndk_version}.zip https://dl.google.com/android/repository/${ndk_version}-linux-x86_64.zip
+          sudo unzip -q /tmp/${ndk_version}.zip -d /opt/android
+          rm /tmp/${ndk_version}.zip
+      - name: Build with Gradle
+        run: ./gradlew assembleRelease
+      - name: Prepare APKs
+        run: |
+          cp mobile/build/outputs/apk/releases/*.apk upload/
+          cp tv/build/outputs/apk/releases/*.apk upload/
+      - name: Upload Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: upload/*.apk
+          draft: false
+          prerelease: false

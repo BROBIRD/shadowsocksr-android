@@ -22,13 +22,13 @@
         <item>bypass-lan-china</item>
         <item>gfwlist</item>
         <item>china-list</item>
-        <item>custom-rules</item>
         <item>gfwlist-banAD</item>
         <item>banAD</item>
         <item>fullgfwlist</item>
         <item>nobanAD</item>
         <item>backcn-banAD</item>
         <item>onlybanAD</item>
+        <item>custom-rules</item>
     </string-array>
 
     <string-array name="acl_rule_templates" translatable="false">

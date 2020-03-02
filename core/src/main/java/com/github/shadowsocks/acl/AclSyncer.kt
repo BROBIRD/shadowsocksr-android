@@ -47,7 +47,7 @@ class AclSyncer(context: Context, workerParams: WorkerParameters) : CoroutineWor
 
     override suspend fun doWork(): Result = try {
         val route = inputData.getString(KEY_ROUTE)!!
-        val connection = if (route.startsWith("ACL4SSR")) {
+        val connection = if (route in arrayOf(Acl.ACL4SSR_AA, Acl.ACL4SSR_AB, Acl.ACL4SSR_AG, Acl.ACL4SSR_AP, Acl.ACL4SSR_NG, Acl.ACL4SSR_NP)) {
             URL("https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@latest/$route.acl").openConnection() as HttpURLConnection
         } else {
             URL("https://raw.githubusercontent.com/shadowsocksrb/shadowsocks-android/master/core/src/main/assets/acl/$route.acl").openConnection() as HttpURLConnection

@@ -22,7 +22,7 @@
 -->
 
 <resources>
-    <string name="app_name">"影梭"</string>
+    <string name="app_name">"影梭R-K"</string>
     <string name="quick_toggle">"切換"</string>
     <string name="direct_dns">"直連 DNS"</string>
     <string name="remote_dns">"遠程 DNS"</string>
