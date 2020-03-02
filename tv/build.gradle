@@ -24,10 +24,10 @@ android {
       }
     signingConfigs{
         release{
-            storeFile file("../release.jks")
+            storeFile rootProject.file('release.jks')
             keyAlias "releease"
-            storePassword System.getenv("KEYSTORE_PWD")
-            keyPassword System.getenv("KEY_PWD")
+            storePassword System.getenv('KEYSTORE_PWD')
+            keyPassword System.getenv('KEY_PWD')
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
