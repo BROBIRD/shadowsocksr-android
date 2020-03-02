@@ -32,8 +32,8 @@ jobs:
         run: ./gradlew assembleRelease
       - name: Prepare APKs
         run: |
-          cp mobile/build/outputs/apk/release/*.apk upload/
-          cp tv/build/outputs/apk/release/*.apk upload/
+          cp mobile/build/outputs/apk/release/*.apk upload
+          cp tv/build/outputs/apk/release/*.apk upload
       - name: Upload Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
