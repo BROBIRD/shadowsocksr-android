@@ -39,6 +39,12 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig {
+                storeFile file("../release.jks")
+                keyAlias "releease"
+                storePassword System.getenv("KEYSTORE_PWD")
+                keyPassword System.getenv("KEY_PWD")
+            }
         }
     }
     compileOptions {

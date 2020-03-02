@@ -24,6 +24,8 @@ jobs:
         env:
           ndk_version: android-ndk-r21
           ANDROID_NDK_HOME: /opt/android/${ndk_version}
+          KEYSTORE_PWD: ${{ secrets.KEYSTORE_PWD }}
+          KEY_PWD: ${{ secrets.KEY_PWD }}
         run: |
           curl --silent --show-error --location --fail --retry 3 --output /tmp/${ndk_version}.zip https://dl.google.com/android/repository/${ndk_version}-linux-x86_64.zip
           sudo unzip -q /tmp/${ndk_version}.zip -d /opt/android
@@ -32,13 +34,14 @@ jobs:
         run: ./gradlew assembleRelease
       - name: Prepare APKs
         run: |
+          mkdir upload
           cp mobile/build/outputs/apk/release/*.apk upload
           cp tv/build/outputs/apk/release/*.apk upload
       - name: Upload Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           files: upload/*.apk
           draft: false
