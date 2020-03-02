@@ -26,8 +26,8 @@ android {
         release{
             storeFile rootProject.file('release.jks')
             keyAlias "releease"
-            storePassword System.getenv('KEYSTORE_PWD')
-            keyPassword System.getenv('KEY_PWD')
+            storePassword "$System.env.KEYSTORE_PWD"
+            keyPassword "$System.env.KEY_PWD"
         }
     }
     compileSdkVersion rootProject.compileSdkVersion
