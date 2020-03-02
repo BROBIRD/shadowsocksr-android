@@ -17,6 +17,14 @@ android {
     lintOptions {
         abortOnError false
     }
+    signingConfigs{
+        release{
+            storeFile file("../release.jks")
+            keyAlias "releease"
+            storePassword System.getenv("KEYSTORE_PWD")
+            keyPassword System.getenv("KEY_PWD")
+        }
+    }
 
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -36,12 +44,7 @@ android {
             minifyEnabled true
             shrinkResources true
 //            signingConfig signingConfigs.debug
-            signingConfig {
-                    storeFile file("../release.jks")
-                    keyAlias "releease"
-                    storePassword System.getenv("KEYSTORE_PWD")
-                    keyPassword System.getenv("KEY_PWD")
-                }
+            signingConfig signingConfigs.release
             proguardFiles 'r8-rules.pro'
             kotlinOptions {
                 freeCompilerArgs = [
