@@ -20,7 +20,7 @@ android {
     signingConfigs{
         release{
             storeFile rootProject.file('release.jks')
-            keyAlias "releease"
+            keyAlias "release"
             storePassword "$System.env.KEYSTORE_PWD"
             keyPassword "$System.env.KEY_PWD"
         }
